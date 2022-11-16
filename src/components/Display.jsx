@@ -18,12 +18,12 @@ class Display extends Component {
     },
   };
 
-  state = { value: 0 };
+  state = {};
 
   render() {
     return (
       <div style={this.style.container}>
-        <h1 style={this.style.text}>{this.state.value}</h1>
+        <h1 style={this.style.text}>{this.props.value}</h1>
       </div>
     );
   }

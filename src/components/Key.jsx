@@ -15,8 +15,12 @@ class Key extends Component {
 
   render() {
     return (
-      <Button colorScheme="teal" style={this.style}>
-        {this.props.value}
+      <Button
+        colorScheme="teal"
+        style={this.style}
+        onClick={() => this.props.onClick(this.props.state)}
+      >
+        {this.props.state.value}
       </Button>
     );
   }
