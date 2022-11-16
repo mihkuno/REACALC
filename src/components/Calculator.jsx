@@ -27,8 +27,42 @@ class App extends Component {
   };
 
   keyPressed = (key) => {
-    let out = this.state.out + key.value;
-    this.setState({ out: out });
+    const { out } = this.state;
+    // clear pressed
+    if (key.value === "C") {
+      this.setState({ out: "0" });
+    }
+
+    // equal pressed
+    else if (key.value === "=") {
+      this.setState({ out: eval(out).toString() });
+    }
+
+    // no leading zero and operator
+    // allow leading minus
+    else if (
+      !(
+        (out === "0" || out === "-") &&
+        (key.value === "0" || (isNaN(key.value) && key.value !== "-"))
+      )
+    ) {
+      // replace leading zero
+      if (out === "0") {
+        this.setState({ out: key.value });
+      }
+
+      // replace duplicate operator
+      else if (isNaN(out.charAt(out.length - 1)) && isNaN(key.value)) {
+        this.setState({
+          out: out.slice(0, out.length - 1) + key.value,
+        });
+      }
+
+      // append numbers
+      else {
+        this.setState({ out: out + key.value });
+      }
+    }
   };
 
   render() {
@@ -44,7 +78,7 @@ class App extends Component {
         </GridItem>
 
         {this.state.keys.map((keyState) => (
-          <GridItem bg="teal">
+          <GridItem>
             <Key key={keyState.id} state={keyState} onClick={this.keyPressed} />
           </GridItem>
         ))}
